@@ -23,42 +23,42 @@
 
   <!-- TOP STICKY NAVIGATION -->
   <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
       <!-- Brand -->
-      <a href="#" class="flex items-center gap-2.5 group">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/25">
-          <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+      <a href="#" class="flex items-center gap-2 shrink-0 whitespace-nowrap group">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 shrink-0">
+          <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
           </svg>
         </div>
-        <div>
-          <span class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-indigo-400 bg-clip-text text-transparent">AETHER 3D</span>
-          <span class="hidden sm:inline-block ml-1.5 text-[10px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">WebGL Store</span>
+        <div class="flex items-center gap-1.5 whitespace-nowrap">
+          <span class="text-base lg:text-lg font-extrabold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-indigo-400 bg-clip-text text-transparent">AETHER 3D</span>
+          <span class="hidden xl:inline-block text-[10px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">WebGL Store</span>
         </div>
       </a>
 
-      <!-- Center Nav Links -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-        <a href="#hero-stage" class="hover:text-cyan-400 transition">3D Showroom</a>
-        <a href="#catalog-section" class="hover:text-cyan-400 transition">Electronics Catalog</a>
-        <button id="nav-open-studio-btn" class="hover:text-cyan-400 transition flex items-center gap-1">
+      <!-- Center Nav Links (Single-Line Guaranteed) -->
+      <nav class="hidden md:flex items-center gap-3.5 lg:gap-5 text-xs lg:text-[13px] font-semibold text-slate-300 whitespace-nowrap shrink-0">
+        <a href="#hero-stage" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition">3D Showroom</a>
+        <a href="#catalog-section" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition">Electronics Catalog</a>
+        <button id="nav-open-studio-btn" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition flex items-center gap-1">
           <span>3D Customizer Studio</span>
         </button>
-        <button id="nav-track-order-btn" class="hover:text-cyan-400 transition">Track Order</button>
-        <button id="nav-admin-btn" class="px-3 py-1 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-300 hover:bg-amber-500/25 transition flex items-center gap-1.5 font-bold text-xs">
+        <button id="nav-track-order-btn" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition">Track Order</button>
+        <button id="nav-admin-btn" class="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-300 hover:bg-amber-500/25 transition flex items-center gap-1.5 font-bold text-xs">
           <span>⚡ Admin &amp; .GLB Studio</span>
         </button>
       </nav>
 
       <!-- Right Search, Auth & Cart -->
-      <div class="flex items-center gap-2.5">
-        <div class="relative hidden sm:block">
+      <div class="flex items-center gap-2 shrink-0 whitespace-nowrap">
+        <div class="relative hidden sm:block shrink-0">
           <input
             id="global-search-input"
             type="text"
-            placeholder="Search headphones, phones, watches..."
-            class="w-48 lg:w-60 bg-slate-900/90 border border-slate-700/80 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400"
+            placeholder="Search 3D electronics..."
+            class="w-36 lg:w-48 xl:w-56 bg-slate-900/90 border border-slate-700/80 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400"
           />
           <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -67,16 +67,16 @@
 
         <button
           id="auth-trigger-btn"
-          class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition"
+          class="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition"
         >
           Sign In
         </button>
 
         <button
           id="cart-trigger-btn"
-          class="relative flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition"
+          class="whitespace-nowrap shrink-0 relative flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5.6A1 1 0 006.6 20h10.8a1 1 0 001-.8L20 13M9 22a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
           </svg>
           <span id="cart-count-badge">0</span>
