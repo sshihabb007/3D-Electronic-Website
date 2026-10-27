@@ -1,4 +1,5 @@
 import { SceneManager } from './three/SceneManager.js';
+import { EnterpriseAdminDashboard } from './admin-dashboard.js';
 
 class Aether3DStoreApp {
   constructor() {
@@ -47,6 +48,13 @@ class Aether3DStoreApp {
     this.renderCart();
 
     await Promise.all([this.loadCategories(), this.loadProducts()]);
+    if (
+      window.location.pathname.startsWith('/admin') ||
+      window.location.search.includes('admin=1') ||
+      window.location.hash === '#admin'
+    ) {
+      this.openAdminDashboard();
+    }
   }
 
   showToast(message, type = 'info') {
@@ -962,8 +970,23 @@ class Aether3DStoreApp {
   }
 
   async openAdminDashboard() {
-    document.getElementById('admin-modal').classList.remove('hidden');
-    await this.refreshAdminDashboard();
+    const modal = document.getElementById('admin-modal');
+    const root = document.getElementById('admin-dashboard-root');
+    if (!modal || !root) return;
+    modal.classList.remove('hidden');
+
+    if (!this.enterpriseAdmin) {
+      this.enterpriseAdmin = new EnterpriseAdminDashboard(root, {
+        onClose: () => {
+          modal.classList.add('hidden');
+        },
+        onCatalogChanged: () => {
+          this.loadCategories();
+          this.loadProducts(true);
+        },
+      });
+    }
+    await this.enterpriseAdmin.refreshAll();
   }
 
   async refreshAdminDashboard() {

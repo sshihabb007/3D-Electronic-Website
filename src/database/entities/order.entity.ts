@@ -67,6 +67,30 @@ export class Order {
   @Column({ length: 40, default: 'PROCESSING' })
   orderStatus: 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
 
+  @Column({ type: 'simple-json', nullable: true })
+  fulfillmentMeta: {
+    lifecycleStage?:
+      | 'PENDING_PAYMENT'
+      | 'IN_ASSEMBLY'
+      | 'QUALITY_INSPECTION'
+      | 'DISPATCHED'
+      | 'DELIVERED'
+      | 'RETURNED_RMA';
+    courier?: string;
+    trackingNumber?: string;
+    serialNumber?: string;
+    dispatchedAt?: string;
+    rmaRequest?: {
+      active: boolean;
+      rmaId: string;
+      reason: string;
+      status: 'REQUESTED' | 'APPROVED' | 'RESTOCKED' | 'REFUNDED' | 'REJECTED';
+      serialVerified: boolean;
+      photoUrl?: string;
+    };
+    adminNotes?: string;
+  };
+
   @OneToMany(() => OrderItem, (item) => item.order, {
     cascade: true,
     eager: true,

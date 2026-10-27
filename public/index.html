@@ -91,9 +91,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       <!-- Quick Flagship Device Selector Tabs -->
       <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="hero-product-tabs">
-          <!-- Populated dynamically with Featured Flagship 3D products -->
-        </div>
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="hero-product-tabs"></div>
         <div class="text-xs text-slate-400 flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>Real-Time WebGL 2.0 • 360° Interactive Mesh</span>
@@ -137,11 +135,9 @@
               <span class="text-xs font-bold uppercase tracking-wider text-slate-300">1. Choose Edition Preset</span>
               <span id="hero-selected-variant-name" class="text-xs font-semibold text-cyan-300">Obsidian Matte Black</span>
             </div>
-            <div id="hero-variant-swatches" class="flex flex-wrap gap-2.5">
-              <!-- Populated dynamically -->
-            </div>
+            <div id="hero-variant-swatches" class="flex flex-wrap gap-2.5"></div>
 
-            <!-- Surface Finish Selector (Matte, Titanium, Metallic, Neon, Glossy) -->
+            <!-- Surface Finish Selector -->
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-300">2. 3D Surface Finish</span>
@@ -196,7 +192,6 @@
         <!-- Right Column: Interactive 360° 3D WebGL Canvas & HUD -->
         <div class="lg:col-span-7 relative">
           <div class="relative w-full h-[430px] sm:h-[520px] rounded-3xl border border-slate-800/90 bg-slate-950/60 overflow-hidden shadow-2xl">
-            <!-- Top Left HUD: Instructions & Lighting Presets -->
             <div class="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-1.5">
               <span class="px-2.5 py-1 rounded-lg bg-slate-900/85 border border-slate-700/80 text-[11px] text-slate-300 backdrop-blur-md">
                 🖱️ Drag 360° • Scroll Zoom
@@ -209,7 +204,6 @@
               </div>
             </div>
 
-            <!-- Top Right HUD: Camera Controls -->
             <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5">
               <button id="stage-zoom-in" title="Zoom In" class="w-8 h-8 rounded-lg bg-slate-900/85 hover:bg-slate-800 border border-slate-700 text-white font-bold text-sm flex items-center justify-center">+</button>
               <button id="stage-zoom-out" title="Zoom Out" class="w-8 h-8 rounded-lg bg-slate-900/85 hover:bg-slate-800 border border-slate-700 text-white font-bold text-sm flex items-center justify-center">−</button>
@@ -218,13 +212,9 @@
               <button id="stage-toggle-hotspots" class="px-2.5 h-8 rounded-lg bg-slate-900/85 border border-slate-700 text-xs font-semibold text-slate-200">Pins</button>
             </div>
 
-            <!-- 3D WebGL Container -->
             <div id="hero-3d-canvas-container" class="w-full h-full"></div>
-
-            <!-- 3D Hotspot Overlay Layer -->
             <div id="hero-hotspot-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
 
-            <!-- Active Hotspot Info Popup -->
             <div id="hero-hotspot-card" class="hidden absolute bottom-16 left-4 right-4 sm:right-auto sm:w-80 z-20 glass-panel rounded-2xl p-3.5 border border-cyan-400/40 shadow-xl">
               <div class="flex items-start justify-between gap-2">
                 <h4 id="hotspot-card-title" class="text-xs font-bold text-cyan-300">Feature Highlight</h4>
@@ -233,7 +223,6 @@
               <p id="hotspot-card-desc" class="mt-1 text-xs text-slate-300 leading-relaxed"></p>
             </div>
 
-            <!-- Bottom HUD: Exploded / X-Ray Engineering Slider -->
             <div class="absolute bottom-3 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 backdrop-blur-md">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Exploded X-Ray View</span>
@@ -241,14 +230,7 @@
               </div>
               <div class="flex items-center gap-3 flex-1 max-w-xs">
                 <span class="text-[11px] text-slate-400">Assembled</span>
-                <input
-                  id="hero-explode-slider"
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="0"
-                  class="explode-slider w-full"
-                />
+                <input id="hero-explode-slider" type="range" min="0" max="100" value="0" class="explode-slider w-full" />
                 <span class="text-[11px] text-slate-400">Exploded</span>
               </div>
             </div>
@@ -266,15 +248,9 @@
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Explore 3D Electronics</h2>
       </div>
 
-      <!-- Category Filter Pills & Sort -->
       <div class="flex flex-wrap items-center gap-2">
-        <div id="category-filter-bar" class="flex flex-wrap items-center gap-1.5">
-          <!-- Populated dynamically -->
-        </div>
-        <select
-          id="catalog-sort-select"
-          class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-200 focus:outline-none focus:border-cyan-400"
-        >
+        <div id="category-filter-bar" class="flex flex-wrap items-center gap-1.5"></div>
+        <select id="catalog-sort-select" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-200 focus:outline-none focus:border-cyan-400">
           <option value="featured">Sort: Featured First</option>
           <option value="price_asc">Price: Low to High</option>
           <option value="price_desc">Price: High to Low</option>
@@ -283,10 +259,7 @@
       </div>
     </div>
 
-    <!-- Product Grid -->
-    <div id="catalog-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Populated dynamically -->
-    </div>
+    <div id="catalog-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
   </section>
 
   <!-- INTERACTIVE 3D STUDIO & PRODUCT DETAIL MODAL -->
@@ -303,7 +276,6 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-6">
-        <!-- Studio 3D Viewport -->
         <div class="lg:col-span-7">
           <div class="relative w-full h-[420px] sm:h-[500px] rounded-3xl border border-slate-800 stage-grid-bg overflow-hidden">
             <div id="studio-3d-canvas" class="w-full h-full"></div>
@@ -314,14 +286,12 @@
             </div>
           </div>
 
-          <!-- Technical Specs Table -->
           <div class="mt-6 glass-panel rounded-2xl p-5 border border-slate-800">
             <h4 class="text-sm font-bold uppercase tracking-wider text-cyan-300 mb-3">Technical Hardware Specifications</h4>
             <div id="studio-specs-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs"></div>
           </div>
         </div>
 
-        <!-- Studio Customizer, Price & Reviews -->
         <div class="lg:col-span-5 space-y-6">
           <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
             <div class="flex items-baseline justify-between">
@@ -346,15 +316,11 @@
               </div>
             </div>
 
-            <button
-              id="studio-add-cart-btn"
-              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-extrabold text-sm shadow-lg"
-            >
+            <button id="studio-add-cart-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-extrabold text-sm shadow-lg">
               Add Configured Model to Cart
             </button>
           </div>
 
-          <!-- Customer Reviews & Submit Review -->
           <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
             <h4 class="text-sm font-bold uppercase tracking-wider text-cyan-300">Verified Buyer Reviews</h4>
             <div id="studio-reviews-list" class="space-y-3 max-h-56 overflow-y-auto pr-1"></div>
@@ -393,7 +359,6 @@
 
       <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
 
-      <!-- Checkout Form inside Drawer -->
       <div class="p-5 border-t border-slate-800 bg-slate-950/80 space-y-4">
         <div class="space-y-1 text-xs">
           <div class="flex justify-between text-slate-400"><span>Subtotal (USD)</span><span id="cart-subtotal">$0.00</span></div>
@@ -423,10 +388,7 @@
             </label>
           </div>
 
-          <button
-            type="submit"
-            class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-emerald-300 hover:to-cyan-400 text-slate-950 font-extrabold text-sm shadow-lg transition"
-          >
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-emerald-300 hover:to-cyan-400 text-slate-950 font-extrabold text-sm shadow-lg transition">
             Complete USD Order
           </button>
         </form>
@@ -442,16 +404,8 @@
         <button id="close-track-modal" class="text-slate-400 hover:text-white">✕</button>
       </div>
       <div class="flex gap-2">
-        <input
-          id="track-order-input"
-          type="text"
-          value="ORD-2026-1001"
-          placeholder="Enter Order ID (e.g. ORD-2026-1001)"
-          class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white uppercase font-mono"
-        />
-        <button id="track-order-submit" class="px-5 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">
-          Track
-        </button>
+        <input id="track-order-input" type="text" value="ORD-2026-1001" placeholder="Enter Order ID (e.g. ORD-2026-1001)" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white uppercase font-mono" />
+        <button id="track-order-submit" class="px-5 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Track</button>
       </div>
       <div id="track-order-result" class="text-xs text-slate-300 space-y-3"></div>
     </div>
@@ -472,377 +426,17 @@
         <input id="auth-fullname" type="text" placeholder="Full Name" class="hidden w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white" />
         <input id="auth-email" type="email" value="admin@3dstore.com" placeholder="Email Address" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white" />
         <input id="auth-password" type="password" value="admin123" placeholder="Password" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white" />
-        <button type="submit" class="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs">
-          Continue
-        </button>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs">Continue</button>
       </form>
-      <button id="toggle-auth-mode" class="text-xs text-cyan-400 hover:underline">
-        Need an account? Register here
-      </button>
+      <button id="toggle-auth-mode" class="text-xs text-cyan-400 hover:underline">Need an account? Register here</button>
     </div>
   </div>
 
   <!-- ======================================================================= -->
-  <!-- FULL-FEATURED ADMIN COMMAND CENTER & 3D .GLB STUDIO MODAL              -->
+  <!-- ENTERPRISE 8-SECTION ADMIN DASHBOARD & 3D WEBGL PIPELINE STUDIO OVERLAY -->
   <!-- ======================================================================= -->
-  <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl overflow-y-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-      <!-- Admin Header & Navigation Tabs -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[10px] font-extrabold uppercase tracking-widest">ADMIN STUDIO v2.0</span>
-            <span class="text-xs text-slate-400">MySQL `3d_electronics_db` Connected</span>
-          </div>
-          <h2 class="text-2xl font-extrabold text-white mt-1">Store Command Center &amp; 3D Asset Studio</h2>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <button data-admin-tab="overview" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">
-            📊 Analytics &amp; Stock
-          </button>
-          <button data-admin-tab="product-studio" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 text-slate-200 hover:border-amber-400 transition">
-            ➕ Add / Edit 3D Product &amp; .GLB
-          </button>
-          <button data-admin-tab="catalog-manager" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 text-slate-200 hover:border-amber-400 transition">
-            🎛️ Catalog, Variants &amp; Hotspots
-          </button>
-          <button data-admin-tab="orders-manager" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 text-slate-200 hover:border-amber-400 transition">
-            📦 Orders &amp; Fulfillment
-          </button>
-          <button data-admin-tab="categories-manager" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 text-slate-200 hover:border-amber-400 transition">
-            🗂️ Categories
-          </button>
-          <button id="close-admin-modal" class="px-3.5 py-2 rounded-xl bg-rose-500/15 border border-rose-500/40 text-xs font-bold text-rose-300 hover:bg-rose-500/25">
-            ✕ Exit
-          </button>
-        </div>
-      </div>
-
-      <!-- TAB 1: ANALYTICS, KPIs, LOW STOCK ALERTS & USERS -->
-      <div id="admin-tab-overview" class="admin-tab-pane space-y-6">
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4" id="admin-kpi-grid"></div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <!-- Low Stock & Quick Restock Panel -->
-          <div class="lg:col-span-6 glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
-            <div class="flex items-center justify-between">
-              <h3 class="text-sm font-extrabold uppercase tracking-wider text-amber-300">⚠️ Low-Stock Inventory &amp; Quick Restock</h3>
-              <span class="text-[11px] text-slate-400">Threshold ≤ 15 units</span>
-            </div>
-            <div id="admin-low-stock-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
-          </div>
-
-          <!-- Registered Users Directory -->
-          <div class="lg:col-span-6 glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
-            <div class="flex items-center justify-between">
-              <h3 class="text-sm font-extrabold uppercase tracking-wider text-cyan-300">👥 Registered Store Accounts</h3>
-              <span class="text-[11px] text-slate-400">Admins &amp; Customers</span>
-            </div>
-            <div id="admin-users-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2: ADD / EDIT 3D PRODUCT + LIVE 3D .GLB STUDIO PREVIEW -->
-      <div id="admin-tab-product-studio" class="admin-tab-pane hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <!-- Left: Comprehensive Product & .GLB Form -->
-          <div class="lg:col-span-7 glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div>
-                <h3 id="adm-form-heading" class="text-lg font-extrabold text-white">Create New 3D Electronics Product</h3>
-                <p class="text-xs text-slate-400">Configure pricing, featured status, specs, and upload a custom `.glb` 3D file or use a built-in 3D generator.</p>
-              </div>
-              <button type="button" id="adm-reset-form-btn" class="px-3 py-1 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300 hover:text-white">
-                Reset Form
-              </button>
-            </div>
-
-            <form id="admin-create-product-form" class="space-y-4 text-xs">
-              <input type="hidden" id="adm-edit-product-id" value="" />
-
-              <!-- Row 1: Name, Brand, SKU -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="sm:col-span-1">
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Product Name *</label>
-                  <input id="adm-prod-name" type="text" placeholder="e.g. Aether VR Vision Pro" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Brand *</label>
-                  <input id="adm-prod-brand" type="text" placeholder="Aether 3D" value="Aether 3D" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">SKU Code</label>
-                  <input id="adm-prod-sku" type="text" placeholder="Auto-generated if empty" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono" />
-                </div>
-              </div>
-
-              <!-- Row 2: Category, Base Price, Sale Price, Stock -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Category *</label>
-                  <select id="adm-prod-category" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"></select>
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Base Price ($USD) *</label>
-                  <input id="adm-prod-price" type="number" step="0.01" placeholder="399.00" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Sale Price ($USD)</label>
-                  <input id="adm-prod-sale-price" type="number" step="0.01" placeholder="Optional discount" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Stock Quantity *</label>
-                  <input id="adm-prod-stock" type="number" value="30" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                </div>
-              </div>
-
-              <!-- Row 3: Badge, Featured Toggle, Active Toggle -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center bg-slate-900/70 p-3 rounded-xl border border-slate-800">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Promo Badge</label>
-                  <input id="adm-prod-badge" type="text" value="FLAGSHIP 3D" placeholder="FLAGSHIP 3D" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                </div>
-                <label class="flex items-center gap-2.5 cursor-pointer pt-3 sm:pt-4">
-                  <input id="adm-prod-featured" type="checkbox" checked class="w-4 h-4 accent-amber-400 rounded" />
-                  <span class="font-bold text-amber-300">★ Featured on 3D Hero Stage</span>
-                </label>
-                <label class="flex items-center gap-2.5 cursor-pointer pt-3 sm:pt-4">
-                  <input id="adm-prod-active" type="checkbox" checked class="w-4 h-4 accent-emerald-400 rounded" />
-                  <span class="font-bold text-emerald-300">✓ Published in Storefront</span>
-                </label>
-              </div>
-
-              <!-- Tagline & Description -->
-              <div class="space-y-2">
-                <input id="adm-prod-tagline" type="text" placeholder="Short Engineering Tagline (e.g. Dual-Chip Spatial Audio with Titanium Shell)" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-                <textarea id="adm-prod-desc" rows="2" placeholder="Full Product Description..." required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"></textarea>
-              </div>
-
-              <!-- 3D Model Configuration & .GLB File Uploader Box -->
-              <div class="p-4 rounded-2xl bg-slate-900/95 border border-cyan-500/30 space-y-3">
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-cyan-300 uppercase tracking-wider">🧊 3D Model Engine &amp; .GLB / .GLTF File Upload</span>
-                  <span id="adm-glb-status-badge" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">Procedural 3D Active</span>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div class="sm:col-span-2">
-                    <label class="block text-[11px] text-slate-400 mb-1">3D Model Source / Archetype</label>
-                    <select id="adm-model-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-semibold">
-                      <option value="PROCEDURAL_HEADPHONE">🎧 Built-in 3D Over-Ear ANC Headphones</option>
-                      <option value="PROCEDURAL_PHONE">📱 Built-in 3D Flagship 5G Smartphone</option>
-                      <option value="PROCEDURAL_WATCH">⌚ Built-in 3D Sapphire Smartwatch</option>
-                      <option value="PROCEDURAL_EARBUDS">🎵 Built-in 3D Wireless ANC Earbuds + Case</option>
-                      <option value="PROCEDURAL_SPEAKER">🔊 Built-in 3D 360° Spatial Speaker</option>
-                      <option value="PROCEDURAL_LAPTOP">💻 Built-in 3D Pro Creator &amp; Gaming Laptop</option>
-                      <option value="PROCEDURAL_VR_HEADSET">🥽 Built-in 3D Spatial VR / MR Headset</option>
-                      <option value="PROCEDURAL_CAMERA">📷 Built-in 3D 8K Mirrorless Cinema Camera</option>
-                      <option value="PROCEDURAL_CONSOLE">🎮 Built-in 3D Handheld OLED Gaming Console</option>
-                      <option value="GLB_FILE">📦 Custom Uploaded .GLB / .GLTF 3D File</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block text-[11px] text-slate-400 mb-1">Default Lighting</label>
-                    <select id="adm-env-preset" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white">
-                      <option value="studio">Studio Soft</option>
-                      <option value="neon">Cyber Neon</option>
-                      <option value="dark">Dark Obsidian</option>
-                      <option value="warm">Warm Gold</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Drag & Drop .GLB File Upload Zone -->
-                <div class="border-2 border-dashed border-slate-700 hover:border-cyan-400 rounded-xl p-3.5 text-center transition bg-slate-950/60">
-                  <input type="hidden" id="adm-uploaded-glb-url" value="" />
-                  <label class="cursor-pointer block space-y-1">
-                    <div class="text-cyan-300 font-bold">📁 Click to Select or Drop a `.glb` / `.gltf` 3D Model File (up to 50MB)</div>
-                    <div id="adm-glb-filename-display" class="text-[11px] text-slate-400">Uploading a .glb file automatically previews it in the 3D viewport on the right!</div>
-                    <input id="adm-glb-file" type="file" accept=".glb,.gltf" class="hidden" />
-                  </label>
-                </div>
-
-                <!-- Default 3D Color & Finish Presets -->
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center pt-1">
-                  <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Default Finish</label>
-                    <select id="adm-default-finish" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-white">
-                      <option value="MATTE">MATTE</option>
-                      <option value="TITANIUM">TITANIUM</option>
-                      <option value="METALLIC">METALLIC</option>
-                      <option value="NEON">NEON</option>
-                      <option value="GLOSSY">GLOSSY</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Primary Hex</label>
-                    <input type="color" id="adm-primary-hex" value="#18181b" class="w-full h-8 rounded bg-transparent cursor-pointer" />
-                  </div>
-                  <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Secondary Hex</label>
-                    <input type="color" id="adm-secondary-hex" value="#334155" class="w-full h-8 rounded bg-transparent cursor-pointer" />
-                  </div>
-                  <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Accent/Neon</label>
-                    <input type="color" id="adm-accent-hex" value="#38bdf8" class="w-full h-8 rounded bg-transparent cursor-pointer" />
-                  </div>
-                  <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">3D Scale (<span id="adm-scale-val">1.0</span>x)</label>
-                    <input type="range" id="adm-default-scale" min="0.5" max="1.8" step="0.05" value="1.0" class="w-full" />
-                  </div>
-                </div>
-              </div>
-
-              <!-- Dynamic Technical Specs Builder -->
-              <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-slate-300">Technical Hardware Specifications</span>
-                  <button type="button" id="adm-add-spec-row" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 font-bold text-[11px] hover:bg-cyan-500/30">
-                    + Add Spec Row
-                  </button>
-                </div>
-                <div id="adm-specs-rows" class="space-y-2 max-h-36 overflow-y-auto pr-1"></div>
-              </div>
-
-              <button type="submit" id="adm-submit-product-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-cyan-400 text-slate-950 font-extrabold text-sm shadow-xl">
-                💾 Save 3D Product to MySQL Database
-              </button>
-            </form>
-          </div>
-
-          <!-- Right: Live 3D Admin Preview Viewport -->
-          <div class="lg:col-span-5 space-y-4">
-            <div class="glass-panel rounded-2xl p-4 border border-slate-800">
-              <div class="flex items-center justify-between mb-3">
-                <div>
-                  <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-300">Live 3D Admin Preview Stage</span>
-                  <p class="text-[11px] text-slate-400">Test your 3D archetype or uploaded `.glb` model in real time</p>
-                </div>
-                <button type="button" id="adm-preview-explode-btn" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-[11px] font-bold text-cyan-300">
-                  Toggle Explode
-                </button>
-              </div>
-              <div id="admin-preview-3d-canvas" class="w-full h-[380px] rounded-2xl stage-grid-bg border border-slate-800 overflow-hidden"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 3: 3D CATALOG, VARIANTS & HOTSPOTS MANAGER -->
-      <div id="admin-tab-catalog-manager" class="admin-tab-pane hidden space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <!-- Left: All Products Table with Featured Toggle, Quick .GLB Upload, Edit, Delete -->
-          <div class="lg:col-span-7 glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="text-base font-extrabold text-white">All 3D Products (Featured, .GLB &amp; Inventory Controls)</h3>
-              <input id="adm-catalog-search" type="text" placeholder="Filter products..." class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white" />
-            </div>
-            <div id="admin-products-list" class="space-y-3 max-h-[540px] overflow-y-auto pr-1"></div>
-          </div>
-
-          <!-- Right: Selected Product Variants & 3D Hotspots Manager -->
-          <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 space-y-5">
-            <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400">3D Configurator Sub-Items</span>
-              <h3 id="adm-submanager-title" class="text-base font-extrabold text-white mt-0.5">Select a Product to Manage Variants &amp; 3D Hotspots</h3>
-            </div>
-
-            <!-- Add & List Color/Finish Variants -->
-            <div class="space-y-3 border-t border-slate-800 pt-4">
-              <h4 class="text-xs font-extrabold uppercase text-amber-300">🎨 Color &amp; PBR Finish Variants</h4>
-              <div id="adm-variants-list" class="space-y-2 max-h-44 overflow-y-auto"></div>
-
-              <form id="adm-add-variant-form" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2 text-xs">
-                <div class="font-bold text-slate-300">+ Add New Color / Finish Variant</div>
-                <div class="grid grid-cols-2 gap-2">
-                  <input id="adm-var-name" type="text" placeholder="Variant Name (e.g. Emerald Titanium)" required class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                  <select id="adm-var-finish" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white">
-                    <option value="MATTE">MATTE</option>
-                    <option value="TITANIUM">TITANIUM</option>
-                    <option value="METALLIC">METALLIC</option>
-                    <option value="NEON">NEON</option>
-                    <option value="GLOSSY">GLOSSY</option>
-                  </select>
-                </div>
-                <div class="grid grid-cols-4 gap-2 items-center">
-                  <label class="text-[10px] text-slate-400 flex items-center gap-1">Pri <input type="color" id="adm-var-pri" value="#065f46" class="w-6 h-6" /></label>
-                  <label class="text-[10px] text-slate-400 flex items-center gap-1">Sec <input type="color" id="adm-var-sec" value="#111827" class="w-6 h-6" /></label>
-                  <label class="text-[10px] text-slate-400 flex items-center gap-1">Acc <input type="color" id="adm-var-acc" value="#34d399" class="w-6 h-6" /></label>
-                  <input id="adm-var-price-mod" type="number" step="1" value="0" placeholder="+$USD" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white" />
-                </div>
-                <button type="submit" class="w-full py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-bold">
-                  Add Variant to Product
-                </button>
-              </form>
-            </div>
-
-            <!-- Add & List 3D Feature Hotspots -->
-            <div class="space-y-3 border-t border-slate-800 pt-4">
-              <h4 class="text-xs font-extrabold uppercase text-cyan-300">📍 Interactive 3D Feature Hotspots</h4>
-              <div id="adm-hotspots-list" class="space-y-2 max-h-40 overflow-y-auto"></div>
-
-              <form id="adm-add-hotspot-form" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2 text-xs">
-                <div class="font-bold text-slate-300">+ Pin New 3D Hotspot</div>
-                <input id="adm-hs-title" type="text" placeholder="Hotspot Title (e.g. Sapphire Camera Lens)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <input id="adm-hs-desc" type="text" placeholder="Callout Description..." required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <div class="grid grid-cols-3 gap-2">
-                  <input id="adm-hs-x" type="number" step="0.05" value="0.0" placeholder="Pos X" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white" />
-                  <input id="adm-hs-y" type="number" step="0.05" value="0.35" placeholder="Pos Y" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white" />
-                  <input id="adm-hs-z" type="number" step="0.05" value="0.45" placeholder="Pos Z" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white" />
-                </div>
-                <button type="submit" class="w-full py-1.5 rounded-lg bg-indigo-500/20 border border-indigo-400/50 text-indigo-300 font-bold">
-                  Save 3D Hotspot Pin
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 4: ORDERS & FULFILLMENT MANAGER -->
-      <div id="admin-tab-orders-manager" class="admin-tab-pane hidden space-y-4">
-        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h3 class="text-base font-extrabold text-white">Customer Orders &amp; Fulfillment Pipeline (USD)</h3>
-              <p class="text-xs text-slate-400">Update order status (`PENDING` → `PROCESSING` → `SHIPPED` → `DELIVERED`) and payment status</p>
-            </div>
-            <select id="adm-order-filter" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
-              <option value="ALL">All Orders</option>
-              <option value="PENDING">Pending</option>
-              <option value="PROCESSING">Processing</option>
-              <option value="SHIPPED">Shipped</option>
-              <option value="DELIVERED">Delivered</option>
-              <option value="CANCELLED">Cancelled</option>
-            </select>
-          </div>
-          <div id="admin-orders-list" class="space-y-3 max-h-[520px] overflow-y-auto"></div>
-        </div>
-      </div>
-
-      <!-- TAB 5: CATEGORY MANAGER -->
-      <div id="admin-tab-categories-manager" class="admin-tab-pane hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-            <h3 class="text-base font-extrabold text-white">Create New Electronics Category</h3>
-            <form id="adm-create-category-form" class="space-y-3 text-xs">
-              <input id="adm-cat-name" type="text" placeholder="Category Name (e.g. Gaming Laptops, VR Headsets)" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white" />
-              <textarea id="adm-cat-desc" rows="2" placeholder="Category Description..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"></textarea>
-              <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs">
-                + Add Category
-              </button>
-            </form>
-          </div>
-          <div class="lg:col-span-7 glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
-            <h3 class="text-base font-extrabold text-white">Active Store Categories</h3>
-            <div id="adm-categories-list" class="space-y-2.5"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-slate-950 overflow-y-auto">
+    <div id="admin-dashboard-root"></div>
   </div>
 
   <!-- TOAST NOTIFICATION -->
@@ -852,7 +446,7 @@
   <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p>© 2026 AETHER 3D Electronics. Powered by NestJS, MySQL, Tailwind CSS &amp; Three.js WebGL.</p>
-      <p>Default Demo Tracking ID: <span class="text-cyan-400 font-mono">ORD-2026-1001</span></p>
+      <p>Default Demo Tracking ID: <span class="text-cyan-400 font-mono">ORD-2026-1001</span> • <a href="/admin.html" class="text-amber-300 hover:underline font-bold">Open Full Admin Dashboard (/admin.html)</a></p>
     </div>
   </footer>
 

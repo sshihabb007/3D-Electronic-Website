@@ -1721,48 +1721,263 @@ export class SeedService implements OnModuleInit {
       newlyAddedCount++;
     }
 
-    // 4. Ensure Demo Order ORD-2026-1001 exists
-    const existingOrder = await this.orderRepo.findOne({
-      where: { orderNumber: 'ORD-2026-1001' },
+    // 4. Ensure Demo Orders ORD-2026-1001 through ORD-2026-1006 exist
+    const allSeededProducts = await this.productRepo.find({
+      order: { id: 'ASC' },
     });
-    if (!existingOrder && firstProduct) {
-      const sampleOrder = await this.orderRepo.save(
-        this.orderRepo.create({
-          orderNumber: 'ORD-2026-1001',
-          userId: demoCustomer.id,
-          customerName: 'Alex Mercer',
-          customerEmail: 'alex@example.com',
-          customerPhone: '+1 (555) 234-5678',
-          shippingAddress: {
-            street: '1200 Tech Plaza Apt 4B',
-            city: 'Austin',
-            state: 'TX',
-            zipCode: '78701',
-            country: 'United States',
-          },
-          subtotal: 349.0,
-          shippingCost: 0.0,
-          taxAmount: 27.92,
-          totalAmount: 376.92,
-          paymentMethod: 'STRIPE_CARD',
-          paymentStatus: 'PAID',
-          orderStatus: 'SHIPPED',
-        }),
-      );
+    const p0 = allSeededProducts[0] || firstProduct;
+    const p1 = allSeededProducts[1] || p0;
+    const p2 = allSeededProducts[2] || p0;
+    const p3 = allSeededProducts[5] || p0;
+    const p4 = allSeededProducts[8] || p0;
 
-      await this.orderItemRepo.save(
-        this.orderItemRepo.create({
-          orderId: sampleOrder.id,
-          productId: firstProduct.id,
-          productName: firstProduct.name,
-          variantName: 'Titanium Silver Alloy',
-          finishType: 'TITANIUM',
-          primaryHex: '#cbd5e1',
-          accentHex: '#6366f1',
-          quantity: 1,
-          unitPrice: 349.0,
-        }),
-      );
+    const demoOrdersSeed = [
+      {
+        orderNumber: 'ORD-2026-1001',
+        userId: demoCustomer.id,
+        customerName: 'Alex Mercer',
+        customerEmail: 'alex@example.com',
+        customerPhone: '+1 (555) 234-5678',
+        shippingAddress: {
+          street: '1200 Tech Plaza Apt 4B',
+          city: 'Austin',
+          state: 'TX',
+          zipCode: '78701',
+          country: 'United States',
+        },
+        subtotal: 349.0,
+        shippingCost: 0.0,
+        taxAmount: 27.92,
+        totalAmount: 376.92,
+        paymentMethod: 'STRIPE_CARD' as const,
+        paymentStatus: 'PAID' as const,
+        orderStatus: 'SHIPPED' as const,
+        items: p0
+          ? [
+              {
+                productId: p0.id,
+                productName: p0.name,
+                variantName: 'Titanium Silver Alloy',
+                finishType: 'TITANIUM',
+                primaryHex: '#cbd5e1',
+                accentHex: '#6366f1',
+                quantity: 1,
+                unitPrice: 349.0,
+              },
+            ]
+          : [],
+      },
+      {
+        orderNumber: 'ORD-2026-1002',
+        userId: demoCustomer.id,
+        customerName: 'Elena Vance',
+        customerEmail: 'elena.vance@cybermail.io',
+        customerPhone: '+1 (415) 890-4412',
+        shippingAddress: {
+          street: '742 Evergreen Innovation Blvd',
+          city: 'San Francisco',
+          state: 'CA',
+          zipCode: '94107',
+          country: 'United States',
+        },
+        subtotal: 1498.0,
+        shippingCost: 0.0,
+        taxAmount: 119.84,
+        totalAmount: 1617.84,
+        paymentMethod: 'STRIPE_CARD' as const,
+        paymentStatus: 'PAID' as const,
+        orderStatus: 'DELIVERED' as const,
+        items: [
+          ...(p1
+            ? [
+                {
+                  productId: p1.id,
+                  productName: p1.name,
+                  variantName: 'Cyber Neon Pulse',
+                  finishType: 'NEON',
+                  primaryHex: '#0f172a',
+                  accentHex: '#00f5d4',
+                  quantity: 1,
+                  unitPrice: 1099.0,
+                },
+              ]
+            : []),
+          ...(p2
+            ? [
+                {
+                  productId: p2.id,
+                  productName: p2.name,
+                  variantName: 'Obsidian Matte Black',
+                  finishType: 'MATTE',
+                  primaryHex: '#18181b',
+                  accentHex: '#38bdf8',
+                  quantity: 1,
+                  unitPrice: 399.0,
+                },
+              ]
+            : []),
+        ],
+      },
+      {
+        orderNumber: 'ORD-2026-1003',
+        userId: null,
+        customerName: 'Marcus Sterling',
+        customerEmail: 'm.sterling@quantumlabs.org',
+        customerPhone: '+1 (212) 665-9901',
+        shippingAddress: {
+          street: '88 Madison Ave Suite 1900',
+          city: 'New York',
+          state: 'NY',
+          zipCode: '10016',
+          country: 'United States',
+        },
+        subtotal: 2399.0,
+        shippingCost: 0.0,
+        taxAmount: 191.92,
+        totalAmount: 2590.92,
+        paymentMethod: 'STRIPE_CARD' as const,
+        paymentStatus: 'PAID' as const,
+        orderStatus: 'PROCESSING' as const,
+        items: p3
+          ? [
+              {
+                productId: p3.id,
+                productName: p3.name,
+                variantName: 'Forged Titanium Pro',
+                finishType: 'TITANIUM',
+                primaryHex: '#94a3b8',
+                accentHex: '#38bdf8',
+                quantity: 1,
+                unitPrice: 2399.0,
+              },
+            ]
+          : [],
+      },
+      {
+        orderNumber: 'ORD-2026-1004',
+        userId: null,
+        customerName: 'Sophia Chen',
+        customerEmail: 'sophia.chen@designstudio.co',
+        customerPhone: '+1 (206) 442-1820',
+        shippingAddress: {
+          street: '450 Pine Street Apt 1202',
+          city: 'Seattle',
+          state: 'WA',
+          zipCode: '98101',
+          country: 'United States',
+        },
+        subtotal: 698.0,
+        shippingCost: 15.0,
+        taxAmount: 55.84,
+        totalAmount: 768.84,
+        paymentMethod: 'COD' as const,
+        paymentStatus: 'PENDING' as const,
+        orderStatus: 'PENDING' as const,
+        items: p0
+          ? [
+              {
+                productId: p0.id,
+                productName: p0.name,
+                variantName: 'Signature Matte Stealth',
+                finishType: 'MATTE',
+                primaryHex: '#18181b',
+                accentHex: '#38bdf8',
+                quantity: 2,
+                unitPrice: 349.0,
+              },
+            ]
+          : [],
+      },
+      {
+        orderNumber: 'ORD-2026-1005',
+        userId: null,
+        customerName: 'Liam O’Connor',
+        customerEmail: 'liam.oconnor@emeraldtech.ie',
+        customerPhone: '+1 (312) 778-3092',
+        shippingAddress: {
+          street: '233 S Wacker Dr Floor 42',
+          city: 'Chicago',
+          state: 'IL',
+          zipCode: '60606',
+          country: 'United States',
+        },
+        subtotal: 1799.0,
+        shippingCost: 0.0,
+        taxAmount: 143.92,
+        totalAmount: 1942.92,
+        paymentMethod: 'STRIPE_CARD' as const,
+        paymentStatus: 'PAID' as const,
+        orderStatus: 'PENDING' as const,
+        items: p4
+          ? [
+              {
+                productId: p4.id,
+                productName: p4.name,
+                variantName: 'Spatial Glass Edition',
+                finishType: 'GLOSSY',
+                primaryHex: '#1e293b',
+                accentHex: '#a855f7',
+                quantity: 1,
+                unitPrice: 1799.0,
+              },
+            ]
+          : [],
+      },
+      {
+        orderNumber: 'ORD-2026-1006',
+        userId: null,
+        customerName: 'Devon Brooks',
+        customerEmail: 'devon.brooks@mail.com',
+        customerPhone: '+1 (305) 912-4011',
+        shippingAddress: {
+          street: '101 Ocean Drive',
+          city: 'Miami',
+          state: 'FL',
+          zipCode: '33139',
+          country: 'United States',
+        },
+        subtotal: 399.0,
+        shippingCost: 15.0,
+        taxAmount: 31.92,
+        totalAmount: 445.92,
+        paymentMethod: 'STRIPE_CARD' as const,
+        paymentStatus: 'REFUNDED' as const,
+        orderStatus: 'CANCELLED' as const,
+        items: p2
+          ? [
+              {
+                productId: p2.id,
+                productName: p2.name,
+                variantName: 'Chrome Mirror Finish',
+                finishType: 'METALLIC',
+                primaryHex: '#e2e8f0',
+                accentHex: '#38bdf8',
+                quantity: 1,
+                unitPrice: 399.0,
+              },
+            ]
+          : [],
+      },
+    ];
+
+    for (const ordSeed of demoOrdersSeed) {
+      const exists = await this.orderRepo.findOne({
+        where: { orderNumber: ordSeed.orderNumber },
+      });
+      if (!exists && ordSeed.items.length > 0) {
+        const { items, ...orderFields } = ordSeed;
+        const savedOrd = await this.orderRepo.save(
+          this.orderRepo.create(orderFields),
+        );
+        for (const it of items) {
+          await this.orderItemRepo.save(
+            this.orderItemRepo.create({
+              orderId: savedOrd.id,
+              ...it,
+            }),
+          );
+        }
+      }
     }
 
     const totalNow = await this.productRepo.count();

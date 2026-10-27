@@ -57,4 +57,35 @@ export class Product3DConfig {
 
   @Column({ default: true })
   supportsExplodeView: boolean;
+
+  @Column({ type: 'simple-json', nullable: true })
+  pipelineConfig: {
+    fov?: number;
+    minZoom?: number;
+    maxZoom?: number;
+    polarAngleMin?: number;
+    polarAngleMax?: number;
+    autoRotateSpeed?: number;
+    enableShadows?: boolean;
+    enableBloom?: boolean;
+    keyLightIntensity?: number;
+    fillLightIntensity?: number;
+    rimLightIntensity?: number;
+    dracoCompressed?: boolean;
+    ktx2Transcoded?: boolean;
+    lodConfig?: {
+      highPoly?: number;
+      medPoly?: number;
+      lowPoly?: number;
+      activeLod?: 'HIGH' | 'MEDIUM' | 'LOW' | 'AUTO';
+    };
+    meshNodeMap?: Record<
+      string,
+      {
+        slot: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'GLASS' | 'STATIC';
+        explodeVec?: { x: number; y: number; z: number };
+        visible?: boolean;
+      }
+    >;
+  };
 }

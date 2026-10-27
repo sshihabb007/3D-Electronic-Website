@@ -9,7 +9,8 @@ import { ElectronicsBuilder } from './ElectronicsBuilder.js';
  * - Real-time Color & Surface Finish Customizer (Matte, Metallic, Titanium, Glossy, Neon)
  * - Studio Lighting Switcher (Studio Soft, Obsidian Dark, Cyber Neon, Warm Sunset)
  * - Interactive 3D Feature Hotspots with Camera Fly-To
- * - Exploded View / X-Ray Disassembly Slider
+ * - Exploded View / X-Ray Disassembly Slider & Per-Node Explode Vectors
+ * - Mesh Hierarchy Inspector, Material Slot Binding, Model Health Audit & 2D Snapshot Render
  */
 export class SceneManager {
   constructor(containerEl, options = {}) {
@@ -25,6 +26,7 @@ export class SceneManager {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
+      preserveDrawingBuffer: true,
       powerPreference: 'high-performance',
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -55,6 +57,9 @@ export class SceneManager {
     this.explodeFactor = 0;
     this.clock = new THREE.Clock();
     this.cameraTween = null;
+    this.lastFrameTime = performance.now();
+    this.currentFps = 60;
+    this.meshNodesCache = [];
 
     this.setupLighting();
     this.setupStageFloor();
@@ -91,7 +96,6 @@ export class SceneManager {
   }
 
   setupStageFloor() {
-    // Subtle holographic studio pedestal ring & shadow receiver
     const floorGroup = new THREE.Group();
     floorGroup.position.set(0, -1.28, 0);
 
@@ -144,7 +148,6 @@ export class SceneManager {
       this.rimLight.color.set('#ec4899');
       this.rimLight.intensity = 2.4;
     } else {
-      // studio default
       this.ambientLight.intensity = 0.9;
       this.keyLight.color.set('#ffffff');
       this.keyLight.intensity = 2.6;
@@ -152,6 +155,32 @@ export class SceneManager {
       this.fillLight.intensity = 2.2;
       this.rimLight.color.set('#6366f1');
       this.rimLight.intensity = 2.4;
+    }
+  }
+
+  setLightIntensities({ key, fill, rim, shadows, exposure } = {}) {
+    if (key !== undefined) this.keyLight.intensity = Number(key);
+    if (fill !== undefined) this.fillLight.intensity = Number(fill);
+    if (rim !== undefined) this.rimLight.intensity = Number(rim);
+    if (shadows !== undefined) {
+      this.renderer.shadowMap.enabled = Boolean(shadows);
+      this.keyLight.castShadow = Boolean(shadows);
+    }
+    if (exposure !== undefined) {
+      this.renderer.toneMappingExposure = Number(exposure);
+    }
+  }
+
+  setCameraRig({ fov, minZoom, maxZoom, autoRotate, autoRotateSpeed } = {}) {
+    if (fov !== undefined) {
+      this.camera.fov = Math.max(20, Math.min(85, Number(fov)));
+      this.camera.updateProjectionMatrix();
+    }
+    if (minZoom !== undefined) this.controls.minDistance = Number(minZoom);
+    if (maxZoom !== undefined) this.controls.maxDistance = Number(maxZoom);
+    if (autoRotate !== undefined) this.controls.autoRotate = Boolean(autoRotate);
+    if (autoRotateSpeed !== undefined) {
+      this.controls.autoRotateSpeed = Number(autoRotateSpeed);
     }
   }
 
@@ -195,16 +224,213 @@ export class SceneManager {
 
     this.setLightingPreset(config3d.defaultEnvPreset || 'studio');
 
+    if (config3d.pipelineConfig) {
+      const pc = config3d.pipelineConfig;
+      this.setCameraRig({
+        fov: pc.fov,
+        minZoom: pc.minZoom,
+        maxZoom: pc.maxZoom,
+        autoRotateSpeed: pc.autoRotateSpeed,
+      });
+      this.setLightIntensities({
+        key: pc.keyLightIntensity,
+        fill: pc.fillLightIntensity,
+        rim: pc.rimLightIntensity,
+        shadows: pc.enableShadows,
+      });
+    }
+
     const camPos = config3d.cameraPosition || { x: 2.2, y: 1.1, z: 2.7 };
     this.flyCameraTo(camPos, { x: 0, y: 0, z: 0 });
 
     this.setupHotspots(product.hotspots || []);
+    this.indexMeshHierarchy();
   }
 
-  /**
-   * Real-time Color & Surface Finish Customizer
-   * Updates primaryHex, secondaryHex, accentHex, and Finish Type (MATTE | METALLIC | TITANIUM | GLOSSY | NEON)
-   */
+  indexMeshHierarchy() {
+    this.meshNodesCache = [];
+    if (!this.currentModelGroup) return [];
+
+    const archetypeNames = {
+      PROCEDURAL_HEADPHONE: [
+        'Headband_Arc_Mesh',
+        'Headband_Pad_Cushion',
+        'Yoke_Hinge_Left',
+        'EarCup_Housing_Left',
+        'EarCushion_MemoryFoam_L',
+        'LED_Cyber_Ring_L',
+        'Beryllium_Driver_45mm_L',
+        'Yoke_Hinge_Right',
+        'EarCup_Housing_Right',
+        'EarCushion_MemoryFoam_R',
+        'LED_Cyber_Ring_R',
+        'Beryllium_Driver_45mm_R',
+      ],
+      PROCEDURAL_PHONE: [
+        'Titanium_Unibody_Chassis',
+        'LTPO_OLED_Display_Glass',
+        'Dynamic_Island_Sensor_Array',
+        'Camera_Plateau_Visor',
+        'Periscope_Telephoto_Lens_1',
+        'Laser_Focus_Neon_Ring_1',
+        'UltraWide_Sapphire_Lens_2',
+        'Main_200MP_Sensor_Lens_3',
+        'MagSafe_Inductive_Coil_Ring',
+      ],
+    };
+
+    const modelType =
+      this.currentProduct?.config3d?.modelType || 'PROCEDURAL_HEADPHONE';
+    const namePool = archetypeNames[modelType] || [];
+
+    let idx = 0;
+    this.currentModelGroup.traverse((child) => {
+      if (child.isMesh) {
+        const geo = child.geometry;
+        const posAttr = geo?.attributes?.position;
+        const vertices = posAttr ? posAttr.count : 0;
+        const triangles = geo?.index
+          ? Math.round(geo.index.count / 3)
+          : Math.round(vertices / 3);
+
+        let slot = 'PRIMARY';
+        if (this.currentMaterials) {
+          if (child.material === this.currentMaterials.secondaryMat) {
+            slot = 'SECONDARY';
+          } else if (child.material === this.currentMaterials.accentMat) {
+            slot = 'ACCENT';
+          } else if (child.material === this.currentMaterials.glassMat) {
+            slot = 'GLASS';
+          }
+        }
+
+        if (!child.userData.basePosition) {
+          child.userData.basePosition = child.position.clone();
+        }
+        if (!child.userData.explodeVector) {
+          child.userData.explodeVector = new THREE.Vector3(
+            (idx % 2 === 0 ? 1 : -1) * 0.25,
+            0.18,
+            0.22,
+          );
+        }
+
+        const label =
+          child.name ||
+          namePool[idx] ||
+          `Component_Mesh_${String(idx + 1).padStart(2, '0')}`;
+        child.userData.nodeLabel = label;
+        child.userData.nodeIndex = idx;
+        child.userData.materialSlot = slot;
+
+        this.meshNodesCache.push({
+          index: idx,
+          name: label,
+          vertices,
+          triangles,
+          slot,
+          visible: child.visible,
+          explodeVec: {
+            x: Number(child.userData.explodeVector.x.toFixed(2)),
+            y: Number(child.userData.explodeVector.y.toFixed(2)),
+            z: Number(child.userData.explodeVector.z.toFixed(2)),
+          },
+          meshRef: child,
+        });
+        idx++;
+      }
+    });
+    return this.meshNodesCache;
+  }
+
+  getMeshHierarchy() {
+    if (!this.meshNodesCache.length) {
+      this.indexMeshHierarchy();
+    }
+    return this.meshNodesCache.map((n) => ({
+      index: n.index,
+      name: n.name,
+      vertices: n.vertices,
+      triangles: n.triangles,
+      slot: n.meshRef.userData.materialSlot || n.slot,
+      visible: n.meshRef.visible,
+      explodeVec: {
+        x: Number(n.meshRef.userData.explodeVector.x.toFixed(2)),
+        y: Number(n.meshRef.userData.explodeVector.y.toFixed(2)),
+        z: Number(n.meshRef.userData.explodeVector.z.toFixed(2)),
+      },
+    }));
+  }
+
+  updateMeshNode(nodeIndex, updates = {}) {
+    const entry = this.meshNodesCache.find((n) => n.index === Number(nodeIndex));
+    if (!entry || !entry.meshRef) return;
+    const mesh = entry.meshRef;
+
+    if (updates.visible !== undefined) {
+      mesh.visible = Boolean(updates.visible);
+    }
+
+    if (updates.slot && this.currentMaterials) {
+      mesh.userData.materialSlot = updates.slot;
+      if (updates.slot === 'PRIMARY') {
+        mesh.material = this.currentMaterials.primaryMat;
+      } else if (updates.slot === 'SECONDARY') {
+        mesh.material = this.currentMaterials.secondaryMat;
+      } else if (updates.slot === 'ACCENT') {
+        mesh.material = this.currentMaterials.accentMat;
+      } else if (updates.slot === 'GLASS' && this.currentMaterials.glassMat) {
+        mesh.material = this.currentMaterials.glassMat;
+      }
+    }
+
+    if (
+      updates.explodeX !== undefined ||
+      updates.explodeY !== undefined ||
+      updates.explodeZ !== undefined
+    ) {
+      const cur = mesh.userData.explodeVector || new THREE.Vector3();
+      mesh.userData.explodeVector = new THREE.Vector3(
+        updates.explodeX !== undefined ? Number(updates.explodeX) : cur.x,
+        updates.explodeY !== undefined ? Number(updates.explodeY) : cur.y,
+        updates.explodeZ !== undefined ? Number(updates.explodeZ) : cur.z,
+      );
+      if (this.explodeFactor > 0) {
+        this.setExplodeFactor(this.explodeFactor);
+      }
+    }
+  }
+
+  getModelHealthStats() {
+    const nodes = this.getMeshHierarchy();
+    const triangles = nodes.reduce((acc, n) => acc + n.triangles, 0);
+    const vertices = nodes.reduce((acc, n) => acc + n.vertices, 0);
+    const meshCount = nodes.length;
+    const drawCalls = this.renderer?.info?.render?.calls || meshCount;
+    return {
+      triangles,
+      vertices,
+      meshCount,
+      drawCalls,
+      materialCount: 4,
+      textureDimension: '2048x2048 PBR KTX2',
+      estimatedVramMb: Number(((triangles * 0.00018) + 3.4).toFixed(2)),
+      fps: Math.min(60, Math.max(24, Math.round(this.currentFps))),
+      healthStatus:
+        triangles < 50000 ? 'OPTIMAL' : triangles < 120000 ? 'MODERATE' : 'HEAVY',
+    };
+  }
+
+  captureSnapshot() {
+    if (!this.renderer) return '';
+    this.renderer.render(this.scene, this.camera);
+    try {
+      return this.renderer.domElement.toDataURL('image/png');
+    } catch {
+      return '';
+    }
+  }
+
   applyMaterialCustomization(custom = {}) {
     if (!this.currentMaterials) return;
 
@@ -246,6 +472,19 @@ export class SceneManager {
       emissiveIntensity = 1.45;
     }
 
+    if (custom.metalness !== undefined) {
+      metalness = Number(custom.metalness);
+    }
+    if (custom.roughness !== undefined) {
+      roughness = Number(custom.roughness);
+    }
+    if (custom.clearcoat !== undefined) {
+      clearcoat = Number(custom.clearcoat);
+    }
+    if (custom.emissiveIntensity !== undefined) {
+      emissiveIntensity = Number(custom.emissiveIntensity);
+    }
+
     const { primaryMat, secondaryMat, accentMat } = this.currentMaterials;
 
     if (this.currentVariant.primaryHex) {
@@ -274,9 +513,6 @@ export class SceneManager {
     accentMat.needsUpdate = true;
   }
 
-  /**
-   * Exploded View / X-Ray Disassembly (factor 0.0 to 1.0)
-   */
   setExplodeFactor(factor = 0) {
     this.explodeFactor = Math.max(0, Math.min(1, Number(factor)));
     if (!this.currentModelGroup) return;
@@ -288,6 +524,12 @@ export class SceneManager {
           .addScaledVector(child.userData.explodeVector, this.explodeFactor);
       }
     });
+  }
+
+  setScale(scale = 1.0) {
+    if (!this.currentModelGroup) return;
+    const s = Math.max(0.2, Math.min(3.0, Number(scale) || 1.0));
+    this.currentModelGroup.scale.setScalar(s);
   }
 
   setupHotspots(hotspots = []) {
@@ -408,14 +650,19 @@ export class SceneManager {
 
   animate() {
     this.animationFrameId = requestAnimationFrame(this.animate);
+    const now = performance.now();
+    const dt = now - this.lastFrameTime;
+    this.lastFrameTime = now;
+    if (dt > 0) {
+      this.currentFps = this.currentFps * 0.9 + (1000 / dt) * 0.1;
+    }
+
     const elapsed = this.clock.getElapsedTime();
 
-    // Subtle floating levitation on the 3D device
     if (this.currentModelGroup) {
       this.currentModelGroup.position.y = Math.sin(elapsed * 1.8) * 0.045;
     }
 
-    // Smooth camera fly-to tween
     if (this.cameraTween) {
       this.cameraTween.progress += 0.07;
       const t = Math.min(1, this.cameraTween.progress);

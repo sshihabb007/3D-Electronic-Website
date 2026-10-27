@@ -46,6 +46,44 @@ export class AdminController {
     return this.adminService.getDashboardStats();
   }
 
+  @Get('system-state')
+  getSystemState() {
+    return this.adminService.getEnterpriseState();
+  }
+
+  @Put('system-state')
+  updateSystemState(@Body() body: any) {
+    return this.adminService.updateEnterpriseState(body);
+  }
+
+  @Post('cdn-purge')
+  purgeCdnCache() {
+    return this.adminService.purgeCdnCache();
+  }
+
+  @Get('reviews')
+  getAllReviews() {
+    return this.adminService.getAllReviews();
+  }
+
+  @Patch('reviews/:id')
+  toggleReviewVerified(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { isVerifiedPurchase: boolean },
+  ) {
+    return this.adminService.toggleReviewVerified(id, body.isVerifiedPurchase);
+  }
+
+  @Delete('reviews/:id')
+  deleteReview(@Param('id', ParseIntPipe) id: number) {
+    return this.adminService.deleteReview(id);
+  }
+
+  @Post('batch-catalog')
+  batchUpdateCatalog(@Body() body: any) {
+    return this.adminService.batchUpdateCatalog(body);
+  }
+
   @Get('products')
   getAllProductsForAdmin() {
     return this.adminService.getAllProductsForAdmin();
@@ -56,12 +94,37 @@ export class AdminController {
     return this.adminService.getAllOrders();
   }
 
+  @Get('orders/:id')
+  getOrderById(@Param('id', ParseIntPipe) id: number) {
+    return this.adminService.getOrderById(id);
+  }
+
+  @Post('orders')
+  createAdminOrder(@Body() body: any) {
+    return this.adminService.createAdminOrder(body);
+  }
+
+  @Put('orders/:id')
+  updateOrder(@Param('id', ParseIntPipe) id: number, @Body() body: any) {
+    return this.adminService.updateOrder(id, body);
+  }
+
   @Put('orders/:id/status')
   updateOrderStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: any,
   ) {
     return this.adminService.updateOrderStatus(id, body);
+  }
+
+  @Post('orders/bulk-status')
+  bulkUpdateOrderStatus(@Body() body: any) {
+    return this.adminService.bulkUpdateOrderStatus(body);
+  }
+
+  @Delete('orders/:id')
+  deleteOrder(@Param('id', ParseIntPipe) id: number) {
+    return this.adminService.deleteOrder(id);
   }
 
   @Post('products')
@@ -75,6 +138,19 @@ export class AdminController {
     @Body() body: any,
   ) {
     return this.adminService.createOrUpdateProduct(body, id);
+  }
+
+  @Post('products/:id/duplicate')
+  duplicateProduct(@Param('id', ParseIntPipe) id: number) {
+    return this.adminService.duplicateProduct(id);
+  }
+
+  @Put('products/:id/config3d')
+  updateProduct3DConfig(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: any,
+  ) {
+    return this.adminService.updateProduct3DConfig(id, body);
   }
 
   @Patch('products/:id/quick')
@@ -94,13 +170,13 @@ export class AdminController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: glbStorage,
-      limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max
+      limits: { fileSize: 50 * 1024 * 1024 },
     }),
   )
   uploadGlbStandalone(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
       throw new BadRequestException(
-        'Please select a .glb or .gltf file to upload',
+        'Please select a .glb, .gltf, or .usdz file to upload',
       );
     }
     return {
@@ -122,7 +198,7 @@ export class AdminController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (!file) {
-      throw new BadRequestException('Please select a .glb or .gltf 3D file');
+      throw new BadRequestException('Please select a .glb, .gltf, or .usdz 3D file');
     }
     const url = `/uploads/models/${file.filename}`;
     return this.adminService.attachGlbToProduct(id, url);
@@ -134,6 +210,14 @@ export class AdminController {
     @Body() body: any,
   ) {
     return this.adminService.addVariant(id, body);
+  }
+
+  @Put('variants/:variantId')
+  updateVariant(
+    @Param('variantId', ParseIntPipe) variantId: number,
+    @Body() body: any,
+  ) {
+    return this.adminService.updateVariant(variantId, body);
   }
 
   @Delete('variants/:variantId')
@@ -149,6 +233,14 @@ export class AdminController {
     return this.adminService.addHotspot(id, body);
   }
 
+  @Put('hotspots/:hotspotId')
+  updateHotspot(
+    @Param('hotspotId', ParseIntPipe) hotspotId: number,
+    @Body() body: any,
+  ) {
+    return this.adminService.updateHotspot(hotspotId, body);
+  }
+
   @Delete('hotspots/:hotspotId')
   deleteHotspot(@Param('hotspotId', ParseIntPipe) hotspotId: number) {
     return this.adminService.deleteHotspot(hotspotId);
@@ -159,8 +251,26 @@ export class AdminController {
     return this.adminService.createCategory(body);
   }
 
+  @Put('categories/:id')
+  updateCategory(@Param('id', ParseIntPipe) id: number, @Body() body: any) {
+    return this.adminService.updateCategory(id, body);
+  }
+
   @Delete('categories/:id')
   deleteCategory(@Param('id', ParseIntPipe) id: number) {
     return this.adminService.deleteCategory(id);
+  }
+
+  @Put('users/:id/role')
+  updateUserRole(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { role: 'ADMIN' | 'CUSTOMER' },
+  ) {
+    return this.adminService.updateUserRole(id, body.role);
+  }
+
+  @Delete('users/:id')
+  deleteUser(@Param('id', ParseIntPipe) id: number) {
+    return this.adminService.deleteUser(id);
   }
 }

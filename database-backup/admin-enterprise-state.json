@@ -1,0 +1,206 @@
+{
+  "componentParts": [
+    {
+      "id": "COMP-DRV-45",
+      "name": "45mm Beryllium Planar Driver Assembly",
+      "category": "Audio Transducers",
+      "compatibleArchetype": "PROCEDURAL_HEADPHONE",
+      "stock": 64,
+      "threshold": 20,
+      "unitCost": 42.5,
+      "warehouseZone": "AUSTIN-FAB-A1"
+    },
+    {
+      "id": "COMP-HDB-TI",
+      "name": "CNC Grade-5 Titanium Headband Arc",
+      "category": "Structural Chassis",
+      "compatibleArchetype": "PROCEDURAL_HEADPHONE",
+      "stock": 14,
+      "threshold": 18,
+      "unitCost": 38,
+      "warehouseZone": "AUSTIN-FAB-A2"
+    },
+    {
+      "id": "COMP-EAR-MEM",
+      "name": "Acoustic Lambskin Memory Foam EarCups (Pair)",
+      "category": "Ergonomics & Trim",
+      "compatibleArchetype": "PROCEDURAL_HEADPHONE",
+      "stock": 82,
+      "threshold": 25,
+      "unitCost": 19,
+      "warehouseZone": "AUSTIN-FAB-B1"
+    },
+    {
+      "id": "COMP-OLED-68",
+      "name": "6.8\" LTPO 120Hz Micro-Curved OLED Panel",
+      "category": "Displays & Optics",
+      "compatibleArchetype": "PROCEDURAL_PHONE",
+      "stock": 11,
+      "threshold": 15,
+      "unitCost": 115,
+      "warehouseZone": "SHENZHEN-OPT-C4"
+    },
+    {
+      "id": "COMP-SAP-49",
+      "name": "Synthetic Sapphire Crystal Watch Dome 49mm",
+      "category": "Displays & Optics",
+      "compatibleArchetype": "PROCEDURAL_WATCH",
+      "stock": 47,
+      "threshold": 15,
+      "unitCost": 29,
+      "warehouseZone": "ZURICH-LAB-D1"
+    },
+    {
+      "id": "COMP-WAV-VR",
+      "name": "Dual-Pancake Spatial 8K Micro-OLED Waveguide",
+      "category": "Displays & Optics",
+      "compatibleArchetype": "PROCEDURAL_VR_HEADSET",
+      "stock": 9,
+      "threshold": 12,
+      "unitCost": 280,
+      "warehouseZone": "AUSTIN-FAB-V1"
+    },
+    {
+      "id": "COMP-BAT-99",
+      "name": "99.9Wh Solid-State Lithium-Silicon Battery Cell",
+      "category": "Power Systems",
+      "compatibleArchetype": "PROCEDURAL_LAPTOP",
+      "stock": 36,
+      "threshold": 15,
+      "unitCost": 68,
+      "warehouseZone": "AUSTIN-FAB-P2"
+    }
+  ],
+  "surchargeEngine": {
+    "MATTE": {
+      "label": "Stealth Matte Anodized",
+      "surcharge": 0,
+      "roughness": 0.76,
+      "metalness": 0.2
+    },
+    "TITANIUM": {
+      "label": "Brushed Grade-5 Titanium Alloy",
+      "surcharge": 25,
+      "roughness": 0.24,
+      "metalness": 0.86
+    },
+    "METALLIC": {
+      "label": "Liquid Chrome / Crimson Metallic",
+      "surcharge": 20,
+      "roughness": 0.16,
+      "metalness": 0.92
+    },
+    "NEON": {
+      "label": "Cyber Neon Emissive Pulse Trim",
+      "surcharge": 35,
+      "roughness": 0.28,
+      "metalness": 0.58
+    },
+    "GLOSSY": {
+      "label": "Ceramic Mirror Clearcoat Gloss",
+      "surcharge": 15,
+      "roughness": 0.06,
+      "metalness": 0.3
+    }
+  },
+  "badgeTags": [
+    "FLAGSHIP 3D",
+    "360° AUDIO",
+    "PRO WORKSTATION",
+    "SPATIAL 3D",
+    "8K FULL FRAME",
+    "BEST SELLER",
+    "AUDIOPHILE PICK"
+  ],
+  "productCardModes": {},
+  "savedBuilds": [
+    {
+      "id": "BLD-901",
+      "customerName": "Alex Mercer",
+      "customerEmail": "alex@example.com",
+      "productName": "Aether Sonic Pro X1",
+      "finishType": "TITANIUM",
+      "primaryHex": "#cbd5e1",
+      "secondaryHex": "#334155",
+      "accentHex": "#38bdf8",
+      "savedAt": "2026-10-26T16:40:00Z",
+      "estimatedPrice": 374
+    },
+    {
+      "id": "BLD-902",
+      "customerName": "Elena Vance",
+      "customerEmail": "elena.vance@cybermail.io",
+      "productName": "NovaPhone Ultra 5G",
+      "finishType": "NEON",
+      "primaryHex": "#0f172a",
+      "secondaryHex": "#1e1b4b",
+      "accentHex": "#00f5d4",
+      "savedAt": "2026-10-27T09:15:00Z",
+      "estimatedPrice": 1134
+    },
+    {
+      "id": "BLD-903",
+      "customerName": "Marcus Sterling",
+      "customerEmail": "m.sterling@quantumlabs.org",
+      "productName": "AetherBook Pro 16 Max",
+      "finishType": "MATTE",
+      "primaryHex": "#18181b",
+      "secondaryHex": "#27272a",
+      "accentHex": "#f59e0b",
+      "savedAt": "2026-10-27T12:05:00Z",
+      "estimatedPrice": 2399
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "TCK-401",
+      "customerName": "Sophia Chen",
+      "customerEmail": "sophia.chen@designstudio.co",
+      "orderNumber": "ORD-2026-1004",
+      "subject": "Change Custom EarCup Trim Color before Assembly",
+      "priority": "HIGH",
+      "status": "OPEN",
+      "createdAt": "2026-10-27T11:30:00Z"
+    },
+    {
+      "id": "TCK-402",
+      "customerName": "Devon Brooks",
+      "customerEmail": "devon.brooks@mail.com",
+      "orderNumber": "ORD-2026-1006",
+      "subject": "RMA Return Inspection & Refund Confirmation",
+      "priority": "MEDIUM",
+      "status": "RESOLVED",
+      "createdAt": "2026-10-26T14:20:00Z"
+    }
+  ],
+  "engineSettings": {
+    "cdnEdgeUrl": "https://cdn-3d.aetherstore.io/models",
+    "dracoCompressionDefault": true,
+    "ktx2TextureTranscoding": true,
+    "maxTextureDimension": 2048,
+    "shadowMapQuality": "PCF_SOFT_2K",
+    "defaultTargetFps": 60,
+    "mobileAutoLodDowngrade": true,
+    "freeShippingThresholdUsd": 250,
+    "taxRatePercent": 8,
+    "stripeEnabled": true,
+    "codEnabled": true,
+    "lastCdnPurgeAt": "2026-10-27T18:00:00Z"
+  },
+  "auditLogs": [
+    {
+      "id": "LOG-1001",
+      "timestamp": "2026-10-27T18:00:00Z",
+      "actor": "admin@3dstore.com (SUPER_ADMIN)",
+      "category": "3D_PIPELINE",
+      "action": "Synced 20 procedural & GLB 3D electronics models with Draco & PBR presets"
+    },
+    {
+      "id": "LOG-1002",
+      "timestamp": "2026-10-27T18:30:00Z",
+      "actor": "admin@3dstore.com (SUPER_ADMIN)",
+      "category": "FULFILLMENT",
+      "action": "Dispatched Order ORD-2026-1001 via FedEx Priority (Custom Titanium Build)"
+    }
+  ]
+}

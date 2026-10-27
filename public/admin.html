@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AETHER 3D — Enterprise Admin Dashboard & WebGL Asset Pipeline</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/custom.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950">
+  <div id="admin-dashboard-root"></div>
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+  <script type="module">
+    import { EnterpriseAdminDashboard } from '/js/admin-dashboard.js';
+    window.addEventListener('DOMContentLoaded', async () => {
+      const root = document.getElementById('admin-dashboard-root');
+      const dashboard = new EnterpriseAdminDashboard(root, {
+        onClose: () => {
+          window.location.href = '/';
+        },
+      });
+      window.aetherAdmin = dashboard;
+      await dashboard.refreshAll();
+    });
+  </script>
+</body>
+</html>
