@@ -13,6 +13,10 @@ export type ModelArchetype =
   | 'PROCEDURAL_WATCH'
   | 'PROCEDURAL_EARBUDS'
   | 'PROCEDURAL_SPEAKER'
+  | 'PROCEDURAL_LAPTOP'
+  | 'PROCEDURAL_VR_HEADSET'
+  | 'PROCEDURAL_CAMERA'
+  | 'PROCEDURAL_CONSOLE'
   | 'GLB_FILE';
 
 @Entity('product_3d_configs')

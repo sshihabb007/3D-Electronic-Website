@@ -417,6 +417,14 @@ class Aether3DStoreApp {
         return `<svg class="w-14 h-14 text-purple-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 9a3 3 0 116 0v7a2 2 0 11-4 0v-4M17 9a3 3 0 10-6 0"/><rect x="3" y="13" width="18" height="8" rx="3"/></svg>`;
       case 'PROCEDURAL_SPEAKER':
         return `<svg class="w-14 h-14 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="14" r="4"/><circle cx="12" cy="6" r="1.5"/></svg>`;
+      case 'PROCEDURAL_LAPTOP':
+        return `<svg class="w-14 h-14 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>`;
+      case 'PROCEDURAL_VR_HEADSET':
+        return `<svg class="w-14 h-14 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="4"/><path d="M10 17l2-3 2 3"/></svg>`;
+      case 'PROCEDURAL_CAMERA':
+        return `<svg class="w-14 h-14 text-rose-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+      case 'PROCEDURAL_CONSOLE':
+        return `<svg class="w-14 h-14 text-emerald-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4m-2-2v4m7-1h.01M18 11h.01"/></svg>`;
       default:
         return `<svg class="w-14 h-14 text-cyan-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>`;
     }
