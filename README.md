@@ -6,7 +6,137 @@ Shoppers can inspect flagship consumer electronics (**Headphones, Smartphones, S
 
 ---
 
-## ✨ Key Features
+## 🔐 Login Details & Demo Credentials
+
+### 1. Website User & Admin Login Credentials
+Click the **`Sign In`** button in the top-right navigation bar of `http://localhost:3000` to log in with either pre-seeded account:
+
+| Account Role | Email Address | Password | Access & Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Administrator (`ADMIN`)** | `admin@3dstore.com` | `admin123` | Full access to the **5-Tab Admin Command Center & `.GLB` 3D Studio**, KPI analytics, low-stock restocking, adding/editing 3D products, uploading `.glb`/`.gltf` 3D models, managing variants/hotspots, and updating customer order statuses. |
+| **Customer (`CUSTOMER`)** | `alex@example.com` | `customer123` | Pre-filled customer profile & shipping address, 3D product customization, USD checkout (`Stripe/Card` or `Cash on Delivery`), order tracking, and submitting verified buyer reviews. |
+
+> **Tip**: You can also register a brand-new account anytime by clicking **`Sign In`** → **`Need an account? Register here`**, or open the Admin Studio directly via the **`⚡ Admin & .GLB Studio`** button in the top navigation bar.
+
+### 2. Demo Order Tracking ID
+Click **`Track Order`** in the top navigation bar and enter:
+- **Order Tracking ID**: `ORD-2026-1001`
+
+### 3. Default MySQL Database Credentials (XAMPP)
+| Parameter | Default Value |
+| :--- | :--- |
+| **Host** | `127.0.0.1` (`localhost`) |
+| **Port** | `3306` |
+| **Database Name** | `3d_electronics_db` |
+| **Username** | `root` |
+| **Password** | *(empty / blank)* |
+| **phpMyAdmin URL** | `http://localhost/phpmyadmin` |
+
+---
+
+## 🛠️ Complete Installation & Setup Guide
+
+Follow these step-by-step instructions to install and run the project on any machine.
+
+### Prerequisites
+1. **Node.js** (`v18.x` or newer) & **npm** — [Download Node.js](https://nodejs.org/)
+2. **XAMPP** (with **MySQL / MariaDB** on port `3306`) — [Download XAMPP](https://www.apachefriends.org/)
+3. **Git** — [Download Git](https://git-scm.com/)
+
+---
+
+### Step 1: Clone the Repository
+Place the project inside `d:\xampp\htdocs\3dweb` (or any directory of your choice):
+```bash
+git clone https://github.com/sshihabb007/3D-Electronic-Website.git 3dweb
+cd 3dweb
+```
+
+---
+
+### Step 2: Start XAMPP MySQL Server
+You can start MySQL using **either** the XAMPP Control Panel **or** PowerShell/Command Prompt:
+
+- **Option A — Using XAMPP Control Panel**:
+  1. Open **XAMPP Control Panel**.
+  2. Click **Start** next to **MySQL** (and **Apache** if you want to use phpMyAdmin).
+  3. Verify MySQL is running on port `3306`.
+
+- **Option B — Using PowerShell / Terminal**:
+  ```powershell
+  & "d:\xampp\mysql\bin\mysqld.exe" --defaults-file="d:\xampp\mysql\bin\my.ini" --console
+  ```
+
+---
+
+### Step 3: Configure Environment Variables (`.env`)
+Verify that the `.env` file in the project root matches your MySQL settings:
+```env
+PORT=3000
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=root
+DB_PASS=
+DB_NAME=3d_electronics_db
+JWT_SECRET=super_secret_3d_electronics_jwt_key_2026
+```
+*(If your MySQL `root` user has a password or uses a custom port, update `DB_PASS` or `DB_PORT` in `.env` accordingly.)*
+
+---
+
+### Step 4: Database Setup (Automatic OR Manual SQL Import)
+
+You have **two ways** to set up the `3d_electronics_db` MySQL database:
+
+#### Method A: Automatic Setup (Recommended — Zero Manual Steps)
+When you start the NestJS server in Step 6, `src/main.ts` and `src/database/seed.service.ts` will **automatically**:
+1. Connect to MySQL and run `CREATE DATABASE IF NOT EXISTS 3d_electronics_db`.
+2. Create all 9 database tables (`users`, `categories`, `products`, `product_3d_configs`, `product_variants`, `product_hotspots`, `orders`, `order_items`, `reviews`).
+3. Seed all 8 flagship 3D products, 5 categories, color/finish variants, 3D hotspots, Admin & Customer accounts, and demo order `ORD-2026-1001`.
+
+#### Method B: Manual SQL Import from Backup (`database-backup/3d_electronics_db_backup.sql`)
+If you prefer to import the full SQL dump manually:
+- **Via phpMyAdmin**:
+  1. Open `http://localhost/phpmyadmin`
+  2. Click **Import** → Choose file `database-backup/3d_electronics_db_backup.sql` → Click **Import / Go**.
+- **Via Command Line**:
+  ```bash
+  d:/xampp/mysql/bin/mysql.exe -h 127.0.0.1 -P 3306 -u root < database-backup/3d_electronics_db_backup.sql
+  ```
+
+---
+
+### Step 5: Install NPM Dependencies & Build
+```bash
+# Install all backend & TypeScript packages
+npm install
+
+# Compile NestJS TypeScript source into dist/
+npm run build
+```
+
+---
+
+### Step 6: Run the Application
+```bash
+# Start in Production mode
+npm run start:prod
+
+# OR start in Development Watch mode (auto-reloads on code changes)
+npm run start:dev
+```
+
+Once started, you will see:
+```text
+[DatabaseInit] Verified MySQL database '3d_electronics_db' on 127.0.0.1:3306
+[Bootstrap] 🚀 3D Interactive Electronics E-Commerce Server running on http://localhost:3000
+```
+
+Open **`http://localhost:3000`** in your browser!
+
+---
+
+## ✨ Key Platform Features
 
 ### 1. Interactive 3D Storefront & Customizer Studio (`Three.js` + `WebGL`)
 - **360° Damped Orbit & Zoom Controls**: Smooth drag-to-rotate, scroll-to-zoom, camera reset, and auto-spin toggle.
@@ -42,83 +172,6 @@ Click **`⚡ Admin & .GLB Studio`** in the top navigation bar to access the 5-ta
    - Inspect each order item's exact customized 3D Finish and color swatch.
 5. **`🗂️ Categories`**:
    - Create new electronics categories (e.g., *Gaming Laptops*, *VR Headsets*, *Drones*) or delete existing ones.
-
-### 3. USD (`$`) Cart, Checkout & Live Order Tracking
-- Slide-over cart preserves the exact 3D finish (`MATTE`, `TITANIUM`, `NEON`, etc.) and color swatches configured by the shopper.
-- Supports **Stripe / Credit Card (Simulated)** and **Cash on Delivery (COD)** in **USD (`$`)** with automatic shipping (`FREE` over `$250`) and tax calculation.
-- Instant **Order Tracking Modal** lookup by Order Number (e.g., `ORD-2026-1001`).
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-| :--- | :--- |
-| **Backend Framework** | NestJS 10 (TypeScript, Modular Architecture) |
-| **Database & ORM** | MySQL / MariaDB (`127.0.0.1:3306` via XAMPP) + TypeORM (`mysql2`) |
-| **File Upload** | Multer (`@nestjs/platform-express`) for `.glb` / `.gltf` 3D assets |
-| **Authentication** | JWT (`@nestjs/jwt`) + `bcryptjs` password hashing |
-| **Frontend Styling** | Tailwind CSS + Custom Glassmorphism & WebGL HUD CSS |
-| **3D Engine** | Three.js (`v0.162.0`) + `OrbitControls` + `GLTFLoader` + `DRACOLoader` |
-
----
-
-## 🚀 Quick Start & Installation
-
-### 1. Prerequisites
-- **Node.js** (v18+ recommended)
-- **XAMPP MySQL** running on `127.0.0.1:3306`
-
-### 2. Environment Variables (`.env`)
-The `.env` file in the root directory is pre-configured for default XAMPP MySQL:
-```env
-PORT=3000
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=root
-DB_PASS=
-DB_NAME=3d_electronics_db
-JWT_SECRET=super_secret_3d_electronics_jwt_key_2026
-```
-
-### 3. Install, Build & Run
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Build the NestJS application
-npm run build
-
-# 3. Start the production server (or use npm run start:dev for watch mode)
-npm run start:prod
-```
-> On startup, the server automatically creates the `3d_electronics_db` database if it does not exist, synchronizes all 9 tables, and seeds the initial 8 flagship 3D products, 5 categories, variants, hotspots, users, and demo order.
-
-### 4. Open in Browser
-- **Storefront & 3D Studio**: `http://localhost:3000`
-
-### 5. Full SQL Database Backup & Restore
-A complete SQL dump (schema + all seeded 3D products, variants, hotspots, categories, users, and orders) is saved in:
-- **SQL Backup File**: [`database-backup/3d_electronics_db_backup.sql`](file:///d:/xampp/htdocs/3dweb/database-backup/3d_electronics_db_backup.sql)
-
-```bash
-# Take a fresh SQL backup anytime:
-npm run db:backup
-
-# Restore from the SQL backup file via XAMPP MySQL CLI:
-d:/xampp/mysql/bin/mysql.exe -h 127.0.0.1 -P 3306 -u root < database-backup/3d_electronics_db_backup.sql
-```
-*(You can also import `database-backup/3d_electronics_db_backup.sql` directly in XAMPP **phpMyAdmin**).*
-
----
-
-## 🔐 Default Credentials & Demo Data
-
-| Role / Feature | Credentials / Identifier |
-| :--- | :--- |
-| **Admin Account** | Email: `admin@3dstore.com` • Password: `admin123` |
-| **Customer Account** | Email: `alex@example.com` • Password: `customer123` |
-| **Demo Order Tracking ID** | `ORD-2026-1001` |
 
 ---
 
@@ -162,9 +215,11 @@ d:/xampp/mysql/bin/mysql.exe -h 127.0.0.1 -P 3306 -u root < database-backup/3d_e
 
 ```text
 d:\xampp\htdocs\3dweb\
-├── README.md                          # Project documentation & Admin guide
+├── README.md                          # Login credentials, Setup guide & API reference
 ├── IMPLEMENTATION_PLAN.md             # Architecture & schema specification
-├── package.json                       # NestJS & TypeORM dependencies
+├── database-backup/
+│   └── 3d_electronics_db_backup.sql   # Full MySQL schema + seeded data dump
+├── package.json                       # NestJS, TypeORM & DB backup scripts
 ├── .env                               # XAMPP MySQL & JWT configuration
 ├── src/
 │   ├── main.ts                        # Auto-DB creation + NestJS bootstrap
